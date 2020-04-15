@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Dashboard
@@ -23,7 +22,8 @@ namespace Dashboard
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowsViewModel(this);
+
+            this.DataContext = new WindowViewModel(this);
         }
     }
 }

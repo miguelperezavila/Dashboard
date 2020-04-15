@@ -1,24 +1,24 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Dashboard.Styles">
+                    xmlns:local="clr-namespace:Dashboard">
 
-    <Color x:Key="BackgroudLight">#efefef</Color>
-    <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroudLight}"/>
+    <Color x:Key="BackgroundLight">#efefef</Color>
+    <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}"/>
 
-    <Color x:Key="BackgroudVeryLight">#fafafa</Color>
+    <Color x:Key="BackgroundVeryLight">#fafafa</Color>
     <SolidColorBrush x:Key="BackgroundVeryLightBrush" Color="{StaticResource BackgroudVeryLight}"/>
 
-    <Color x:Key="ForegroudMain">#686868</Color>
-    <SolidColorBrush x:Key="ForegroundMainBrush" Color="{StaticResource ForegroudMain}"/>
+    <Color x:Key="ForegroundMain">#686868</Color>
+    <SolidColorBrush x:Key="ForegroundMainBrush" Color="{StaticResource ForegroundMain}"/>
 
-    <Color x:Key="ForegroudVeryDark">#000000</Color>
-    <SolidColorBrush x:Key="ForegroundVeryDarkBrush" Color="{StaticResource ForegroudVeryDark}"/>
+    <Color x:Key="ForegroundVeryDark">#000000</Color>
+    <SolidColorBrush x:Key="ForegroundVeryDarkBrush" Color="{StaticResource ForegroundVeryDark}"/>
 
-    <Color x:Key="ForegroudLight">#ffffff</Color>
-    <SolidColorBrush x:Key="ForegroudLightBrush" Color="{StaticResource ForegroudLight}"/>
+    <Color x:Key="ForegroundLight">#ffffff</Color>
+    <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}"/>
 
-    <Color x:Key="ForegroudDark">#bdbdbd</Color>
-    <SolidColorBrush x:Key="ForegroudDarkBrush" Color="{StaticResource ForegroudDark}"/>
+    <Color x:Key="ForegroundDark">#bdbdbd</Color>
+    <SolidColorBrush x:Key="ForegroundDarkBrush" Color="{StaticResource ForegroundDark}"/>
 
     <Color x:Key="WordBlue">#3099c5</Color>
     <SolidColorBrush x:Key="WordBlueBrush" Color="{StaticResource WordBlue}"/>

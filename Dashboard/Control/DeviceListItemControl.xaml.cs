@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Dashboard
 {
     /// <summary>
-    /// Interaction logic for LoginControl.xaml
+    /// Interaction logic for DeviceControlUser.xaml
     /// </summary>
-    public partial class LoginControl : UserControl
+    public partial class DeviceListItemControl : UserControl
     {
-        public LoginControl()
+        public DeviceListItemControl()
         {
             InitializeComponent();
         }

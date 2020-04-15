@@ -3,9 +3,12 @@
     public enum ApplicationPage
     {
         /// <summary>
-        /// The initial Device page
+        /// The current page of the application
         /// </summary>
-        Devices = 0,
+        Login = 0,
         Control = 1,
+        Settings = 2,
+        Location = 3,
+        PlotGraph = 4,
     }
 }

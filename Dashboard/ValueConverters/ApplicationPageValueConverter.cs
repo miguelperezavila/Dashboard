@@ -15,11 +15,17 @@ namespace Dashboard
             //Find the aprropiate page
             switch((ApplicationPage) value )
             {
+                case ApplicationPage.Login:
+                    return new LoginPage();
+
                 case ApplicationPage.Control:
                     return new ControlPage();
 
-                case ApplicationPage.Devices:
-                    return new DevicesPage();
+                case ApplicationPage.Settings:
+                    return new SettingsPage();
+
+                case ApplicationPage.Location:
+                    return new LocationPage();
 
                 default:
                     Debugger.Break();

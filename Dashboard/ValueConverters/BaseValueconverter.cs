@@ -36,6 +36,7 @@ namespace Dashboard
             return mConverter ?? (mConverter = new T());
         }
         #endregion
+        
 
         #region Value Converter Methods
         /// <summary>

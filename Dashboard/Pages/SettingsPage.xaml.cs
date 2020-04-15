@@ -19,13 +19,12 @@ namespace Dashboard
     /// <summary>
     /// Interaction logic for ChatPage.xaml
     /// </summary>
-    public partial class ControlPage : Page
+    public partial class SettingsPage : BasePageWithoutAnimation<SettingsViewModel>
     {
-        public ControlPage()
+        public SettingsPage()
         {
             InitializeComponent();
 
-            this.DataContext = new DevicesViewModel();
 
         }
     }

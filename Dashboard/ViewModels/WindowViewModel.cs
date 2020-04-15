@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Dashboard
 {
-    public class MainWindowsViewModel : BaseViewModel
+    /// <summary>
+    /// The View Model for the custom flat window
+    /// </summary>
+    public class WindowViewModel : BaseViewModel
     {
-        #region Private Members
+        #region Private Member
 
         /// <summary>
         /// The window this view model controls
@@ -19,12 +18,12 @@ namespace Dashboard
         private Window mWindow;
 
         /// <summary>
-        /// The margin around the window for a drop shadow
+        /// The margin around the window to allow for a drop shadow
         /// </summary>
-        private int mOuterMarginSize = 0;
+        private int mOuterMarginSize = 10;
 
         /// <summary>
-        /// The radious of the edges of the window
+        /// The radius of the edges of the window
         /// </summary>
         private int mWindowRadius = 10;
 
@@ -35,24 +34,22 @@ namespace Dashboard
 
         #endregion
 
-
         #region Public Properties
 
-
         /// <summary>
-        /// Minimum Window Width
+        /// The smallest width the window can go to
         /// </summary>
         public double WindowMinimumWidth { get; set; } = 400;
 
         /// <summary>
-        /// Minimum Widnow height
+        /// The smallest height the window can go to
         /// </summary>
         public double WindowMinimumHeight { get; set; } = 400;
 
         /// <summary>
         /// True if the window should be borderless because it is docked or maximized
         /// </summary>
-        public bool Borderless { get { return ((mWindow.WindowState == WindowState.Maximized) || (mDockPosition != WindowDockPosition.Undocked)); } }
+        public bool Borderless { get { return (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); } }
 
         /// <summary>
         /// The size of the resize border around the window
@@ -65,13 +62,12 @@ namespace Dashboard
         public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
 
         /// <summary>
-        /// The paddind of the inner content of the main window
+        /// The padding of the inner content of the main window
         /// </summary>
         public Thickness InnerContentPadding { get; set; } = new Thickness(0);
 
-        public bool LoginAttachmentVisibility { get; set; }
         /// <summary>
-        /// The margin around the window for a drop shadow
+        /// The margin around the window to allow for a drop shadow
         /// </summary>
         public int OuterMarginSize
         {
@@ -87,14 +83,14 @@ namespace Dashboard
         }
 
         /// <summary>
-        /// The margin around the window for a drop shadow
+        /// The margin around the window to allow for a drop shadow
         /// </summary>
-        public Thickness OuterMarginSizeThickness => new Thickness(mOuterMarginSize);
+        public Thickness OuterMarginSizeThickness { get { return new Thickness(OuterMarginSize); } }
 
         /// <summary>
-        /// The radious of the edges of the window
+        /// The radius of the edges of the window
         /// </summary>
-        public int WindowsRadius
+        public int WindowRadius
         {
             get
             {
@@ -108,40 +104,53 @@ namespace Dashboard
         }
 
         /// <summary>
-        /// The radious of the edges of the window
+        /// The radius of the edges of the window
         /// </summary>
-        public CornerRadius WindowsCornerRadius => new CornerRadius(mWindowRadius);
-        /// <summary>
-        /// The height of the title bar/ caption of the window
-        /// </summary>
-        public int TitleHeight { get; set; } = 42;
+        public CornerRadius WindowCornerRadius { get { return new CornerRadius(WindowRadius); } }
 
         /// <summary>
-        /// The height of the title bar/ caption of the window
+        /// The height of the title bar / caption of the window
         /// </summary>
-        public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
+        public int TitleHeight { get; set; } = 42;
+        /// <summary>
+        /// The height of the title bar / caption of the window
+        /// </summary>
+        public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; }
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
+
+        public int MenuSideWidth { get; set; } = 0;
+        public int MenuSideWidthComplement { get; set; } = 900;
+
+        public Visibility MenuSideVisibility { get; set; } = Visibility.Hidden;
+
         #endregion
 
         #region Commands
 
-        public ICommand MinimizeCommand 
-        { 
-            get; 
-            set;
-        }
+        /// <summary>
+        /// The command to minimize the window
+        /// </summary>
+        public ICommand MinimizeCommand { get; set; }
 
+        /// <summary>
+        /// The command to maximize the window
+        /// </summary>
         public ICommand MaximizeCommand { get; set; }
 
+        /// <summary>
+        /// The command to close the window
+        /// </summary>
         public ICommand CloseCommand { get; set; }
 
+        /// <summary>
+        /// The command to show the system menu of the window
+        /// </summary>
         public ICommand MenuCommand { get; set; }
 
-        public ICommand LoginCommand { get; set; }
         #endregion
 
         #region Constructor
@@ -149,37 +158,40 @@ namespace Dashboard
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="window"></param>
-        public MainWindowsViewModel(Window window)
+        public WindowViewModel(Window window)
         {
             mWindow = window;
 
-            // Listen out for the window resizing 
-
+            // Listen out for the window resizing
             mWindow.StateChanged += (sender, e) =>
             {
-                //Fire off events for all properties that are affected by resize
-                OnPropertyChanged(nameof(Borderless));
-                OnPropertyChanged(nameof(ResizeBorderThickness));
-                OnPropertyChanged(nameof(OuterMarginSize));
-                OnPropertyChanged(nameof(OuterMarginSizeThickness));
-                OnPropertyChanged(nameof(WindowsRadius));
-                OnPropertyChanged(nameof(WindowsCornerRadius));
-                OnPropertyChanged(nameof(LoginAttachmentVisibility));
-
+                // Fire off events for all properties that are affected by a resize
+                WindowResized();
             };
 
-            // create Commands;
-
+            // Create commands
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => mWindow.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
-            LoginCommand = new RelayCommand(LoginAttachmentButtonCommand);
+
+            // Fix window resize issue
+            var resizer = new WindowResizer(mWindow);
+
+            // Listen out for dock changes
+            resizer.WindowDockChanged += (dock) =>
+            {
+                // Store last position
+                mDockPosition = dock;
+
+                // Fire off resize events
+                WindowResized();
+            };
         }
+
         #endregion
 
-        #region Private helpers 
+        #region Private Helpers
 
         /// <summary>
         /// Gets the current mouse position on the screen
@@ -194,17 +206,25 @@ namespace Dashboard
             return new Point(position.X + mWindow.Left, position.Y + mWindow.Top);
         }
 
-        #endregion
-
-        public void LoginAttachmentButtonCommand()
+        /// <summary>
+        /// If the window resizes to a special position (docked or maximized)
+        /// this will update all required property change events to set the borders and radius values
+        /// </summary>
+        private void WindowResized()
         {
-            LoginAttachmentVisibility ^= true;
+            // Fire off events for all properties that are affected by a resize
+            OnPropertyChanged(nameof(Borderless));
+            OnPropertyChanged(nameof(ResizeBorderThickness));
+            OnPropertyChanged(nameof(OuterMarginSize));
+            OnPropertyChanged(nameof(OuterMarginSizeThickness));
+            OnPropertyChanged(nameof(WindowRadius));
+            OnPropertyChanged(nameof(WindowCornerRadius));
+            OnPropertyChanged(nameof(MenuSideWidth));
+            OnPropertyChanged(nameof(MenuSideWidthComplement));            
+            OnPropertyChanged(nameof(MenuSideVisibility));
         }
 
-        #region Command Methods
-
 
         #endregion
-
     }
 }
