@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Dashboard
 {
     /// <summary>
@@ -19,7 +21,7 @@ namespace Dashboard
         /// <summary>
         /// Time of the last state update
         /// </summary>
-        public string DateTime { get; set; } 
+        public string Date { get; set; } 
         
         /// <summary>
         /// Convert the state to a color

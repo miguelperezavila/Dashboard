@@ -22,6 +22,6 @@ namespace Dashboard
         /// <summary>
         /// The time of the state update
         /// </summary>
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
     }
 }

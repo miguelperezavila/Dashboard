@@ -1,4 +1,4 @@
-﻿<Page x:Class="Dashboard.ControlPage"
+﻿<local:BasePageWithoutAnimation x:TypeArguments="local:DevicesViewModel" x:Class="Dashboard.ControlPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -79,7 +79,7 @@
                 </StackPanel>
             </Border>
             <Border Grid.Column="1">
-                <Grid DataContext="{x:Static local:DevicesListDesignModel.Instance}" Background="Beige">
+                <Grid d:DataContext="{x:Static local:DevicesListDesignModel.Instance}" Background="Beige">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding Items}">
                             <ItemsControl.ItemTemplate>
@@ -95,4 +95,4 @@
         </Grid>
         
     </Border>
-</Page>
+</local:BasePageWithoutAnimation>

@@ -25,87 +25,30 @@ namespace Dashboard
                 {
                     IMEI = "352656100042210",
                     State = "ON",
-                    DateTime = "2014",
+                    Date = "2015",
                     StatePictureRGB = "#00000",
                 },
                 new DeviceListItemViewModel
                 {
                     IMEI = "352656100042210",
                     State = "OFF",
-                    DateTime = "2014",
+                    Date = "2015",
                     StatePictureRGB = "#00000",
                 },
                 new DeviceListItemViewModel
                 {
                     IMEI = "352656100042210",
                     State = "ON",
-                    DateTime = "2014",
+                    Date = "2015",
                     StatePictureRGB = "#00000",
                 },
                 new DeviceListItemViewModel
                 {
                     IMEI = "352656100042210",
                     State = "ON",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "OFF",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "ON",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "ON",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "OFF",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "ON",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "ON",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "OFF",
-                    DateTime = "2014",
-                    StatePictureRGB = "#00000",
-                },
-                new DeviceListItemViewModel
-                {
-                    IMEI = "352656100042210",
-                    State = "ON",
-                    DateTime = "2014",
+                    Date = "2015",
                     StatePictureRGB = "#00000",
                 }
-
             };
         }
         #endregion

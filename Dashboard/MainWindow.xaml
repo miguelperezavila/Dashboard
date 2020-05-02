@@ -12,7 +12,7 @@
         Icon="Images/Logo/RBZ-logo.png"
         MinWidth="{Binding WindowMinimumWidth}"
         MinHeight="{Binding WindowMinimumHeight}"
-        Title="Welcome, friend!" Height="600" Width="900">
+        Title="Welcome, friend!" Height="600" Width="1000">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">

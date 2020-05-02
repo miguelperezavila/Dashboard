@@ -69,22 +69,24 @@ namespace Dashboard
         public async Task Login(object parameter)
         {
 
-            await RunCommand(() => this.LoginIsRunning, async () =>
+           await RunCommand(() => this.LoginIsRunning, async () =>
            {
-           await Task.Delay(500);
 
-           var username = this.Username;
-           var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
+                await Task.Delay(500);
 
+                bool change = MongoDBHelpers.CheckConnection(this.Username, (parameter as IHavePassword).SecurePassword.Unsecure());
 
-               ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).MenuSideWidth = 250;
-               ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).MenuSideWidthComplement = 200;
-               ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).MenuSideVisibility = Visibility.Visible;
-               ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Control;
-           });
-            
+               //MongoDBHelpers.FindCollection();
 
-            
+                if (change)
+                {
+                    ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Control;
+                }
+                else
+                {
+                    ((WindowViewModel)((MainWindow)Application.Current.MainWindow).DataContext).CurrentPage = ApplicationPage.Login;
+                }
+           });            
         }
         #endregion
     }

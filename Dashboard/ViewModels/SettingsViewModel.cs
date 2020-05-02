@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
-
-
+using MongoDB.Bson;
+using System.Windows.Controls;
 
 namespace Dashboard
 {
@@ -51,6 +50,13 @@ namespace Dashboard
         /// Force the power on
         /// </summary>
         public bool PowerON { get; set; }
+
+
+        public List<string> Items { get; set; }
+
+        public string ItemSelected { get; set; }
+
+
         #endregion
 
         #region
@@ -61,6 +67,8 @@ namespace Dashboard
 
         public SettingsViewModel()
         {
+            Items = MongoDBHelpers.GetDevicesNames();
+
             SendCommand = new RelayCommand(SendConfiguration);
         }
 
@@ -69,7 +77,44 @@ namespace Dashboard
 
         private void SendConfiguration()
         {
-            MQTTHelpers.Publish("prueba", WrapData());
+            var date = DateTimeOffset.Now.ToLocalTime();
+
+            if( (StartTimeHour != null) || (StopTimeHour != null) || PowerOFF || PowerON || (KeepAlive != null) )
+            {
+                var document = new BsonDocument
+            {   {"CommandDate", DateTime.Now} };
+
+                if (StartTimeHour != null && StartTimeMin != null && (StartTimeHour != "") && (StartTimeMin != "") )
+                {
+                    DateTime tmp = new DateTime(date.Year, date.Month, date.Day, TimeLimits(Int32.Parse(StartTimeHour)), TimeLimits(Int32.Parse(StartTimeMin)), 0);
+                    
+                    document.Add("StartTime", tmp);
+                }
+
+                if (StopTimeHour != null && StopTimeMin != null && (StopTimeHour != "") && (StopTimeMin != ""))
+                {
+                    document.Add("StopTime", new DateTime(date.Year, date.Month, date.Day, TimeLimits(Int32.Parse(StopTimeHour)), TimeLimits(Int32.Parse(StopTimeMin)), 0));
+                }
+                if( PowerOFF )
+                {
+                    document.Add("PowerOFF", PowerConvert(PowerOFF));
+                }
+                
+                if( PowerON )
+                {
+                    document.Add("PowerON", PowerConvert(PowerON));
+                }
+                
+                if ( (KeepAlive != null) && (KeepAlive != "") )
+                {
+                    document.Add("KeepAlive", KeepAliveConvert(KeepAlive));
+                }
+
+                if( ItemSelected != null )
+                {
+                    MongoDBHelpers.InsertDocument(ItemSelected, document);
+                }
+            }
         }
 
         

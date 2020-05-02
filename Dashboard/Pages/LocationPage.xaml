@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Dashboard"
-      xmlns:oxy="http://oxyplot.org/wpf"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"                          
       mc:Ignorable="d" 
       x:Name="Page"
       d:DesignHeight="700" d:DesignWidth="700"
@@ -108,19 +108,15 @@
                             <DatePicker DisplayDateStart="{Binding DateStart}" DisplayDateEnd="{Binding DateEnd}"/>
                             <DatePicker Grid.Row="1"/>
                         </Grid>
-                        
-                        
-
-
                     </Border>
-                    <oxy:Plot Grid.Column="1" Grid.Row="1" Title="{Binding Title}" >
-                        <oxy:Plot.Axes>
-                            <oxy:LinearAxis Position="Bottom"/>
-                        </oxy:Plot.Axes>
-                        <oxy:Plot.Series>
-                            <oxy:LineSeries  ItemsSource="{Binding Points}"/>
-                        </oxy:Plot.Series>
-                    </oxy:Plot>
+                    <lvc:CartesianChart  Background="{StaticResource ForegroundLightBrush}" Grid.Column="1" Grid.Row="1" Series="{Binding Series}" LegendLocation="Right" >
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
                 </Grid>
                 
             </Border>

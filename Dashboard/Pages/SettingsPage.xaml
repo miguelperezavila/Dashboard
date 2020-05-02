@@ -111,7 +111,7 @@
                             <TextBlock VerticalAlignment="Center" Margin="2" Grid.Column="0" Grid.Row="0" Text="Device: " FontFamily="{StaticResource LatoRegular}"/>
                             <TextBlock Margin="2" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Text="Start Time: " FontFamily="{StaticResource LatoRegular}"/>
                             <TextBlock Margin="2" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Text="Stop Time: " FontFamily="{StaticResource LatoRegular}"/>
-                            <ComboBox Margin="2" Grid.Column="1" Grid.Row="0" />
+                            <ComboBox Name="comboBoxDevices" Margin="2" Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Items}" SelectedValue="{Binding ItemSelected}"/>
 
                             <Grid Grid.Column="1" Grid.Row="1">
                                 <Grid.ColumnDefinitions>
