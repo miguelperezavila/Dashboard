@@ -95,15 +95,9 @@ namespace Dashboard
                 {
                     document.Add("StopTime", new DateTime(date.Year, date.Month, date.Day, TimeLimits(Int32.Parse(StopTimeHour)), TimeLimits(Int32.Parse(StopTimeMin)), 0));
                 }
-                if( PowerOFF )
-                {
-                    document.Add("PowerOFF", PowerConvert(PowerOFF));
-                }
                 
-                if( PowerON )
-                {
-                    document.Add("PowerON", PowerConvert(PowerON));
-                }
+                document.Add("PowerOFF", PowerConvert(PowerOFF));
+                document.Add("PowerON", PowerConvert(PowerON));
                 
                 if ( (KeepAlive != null) && (KeepAlive != "") )
                 {

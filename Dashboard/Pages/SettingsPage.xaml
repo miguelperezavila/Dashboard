@@ -69,11 +69,11 @@
                             <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"
-                                       Text="&#xf041;"/>
+                                       Text="&#xf201;"/>
                             <TextBlock Grid.Column="1" 
                                        VerticalAlignment="Center"
                                        FontFamily="{StaticResource LatoRegular}"
-                                       Text=" Location"/>
+                                       Text=" Data"/>
                         </Grid>
                     </Button>
                 </StackPanel>

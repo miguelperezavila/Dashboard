@@ -70,11 +70,11 @@
                             <TextBlock FontFamily="{StaticResource FontAwesome}"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Center"
-                                       Text="&#xf041;"/>
+                                       Text="&#xf201;"/>
                             <TextBlock Grid.Column="1" 
                                        VerticalAlignment="Center"
                                        FontFamily="{StaticResource LatoRegular}"
-                                       Text=" Location"/>
+                                       Text=" Data"/>
                         </Grid>
                     </Button>
                 </StackPanel>
@@ -94,28 +94,63 @@
                     <Border Grid.Column="1"
                             Background="{StaticResource ForegroundLightBrush}"
                             BorderThickness="2"
-                            BorderBrush="{StaticResource ForegroundVeryDarkBrush}">
+                            BorderBrush="{StaticResource ForegroundVeryDarkBrush}" Margin="0.2,0,-0.4,0">
 
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <DatePicker DisplayDateStart="{Binding DateStart}" DisplayDateEnd="{Binding DateEnd}"/>
-                            <DatePicker Grid.Row="1"/>
+
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <ComboBox Name="comboBoxLocationDevices" 
+                                          HorizontalAlignment="Center"  
+                                          Margin="20" 
+                                          VerticalAlignment="Top" 
+                                          Width="160"
+                                          ItemsSource="{Binding Items}" 
+                                          SelectedValue="{Binding ItemSelected}"/>
+                                <DatePicker Grid.Column="0"
+                                        DisplayDateStart="{Binding DateStart}" 
+                                        DisplayDateEnd="{Binding DateEnd}"
+                                        SelectedDate="{Binding DateSelected}"
+                                        VerticalAlignment="Center"
+                                        Margin="20"/>    
+                            </StackPanel>
+                            
+                            <Button Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource ControlTestButton}" 
+                                    Width="160"
+                                    Command="{Binding UpdateCommand}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontFamily="{StaticResource FontAwesome}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Text="&#xf1c0;"/>
+                                    <TextBlock Grid.Column="1" 
+                                       VerticalAlignment="Center"
+                                       FontFamily="{StaticResource LatoRegular}"
+                                       Text=" Update"/>
+                                </Grid>
+                            </Button>
+                            
                         </Grid>
                     </Border>
                     <lvc:CartesianChart  Background="{StaticResource ForegroundLightBrush}" Grid.Column="1" Grid.Row="1" Series="{Binding Series}" LegendLocation="Right" >
-                        <lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <!--<lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
-                        </lvc:CartesianChart.AxisX>
+                        </lvc:CartesianChart.AxisX>-->
                     </lvc:CartesianChart>
                 </Grid>
                 

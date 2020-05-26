@@ -1,10 +1,12 @@
-﻿using MongoDB.Bson;
+﻿using Dashboard.DataModels;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
 
 namespace Dashboard
 {
@@ -158,5 +160,37 @@ namespace Dashboard
         {
             Instance.ClientMongo.GetDatabase("tfmDatabase").GetCollection<BsonDocument>(collection).InsertOne(document);
         }
+
+        public static LineSeries GetData( string collection, DateTime date )
+        {
+            LineSeries line = new LineSeries();
+            line.Values = new ChartValues<DateChartModel>();
+
+            var filter = Builders<BsonDocument>.Filter.Eq("topicVersion", "1.0") & Builders<BsonDocument>.Filter.Gte("time", date) & Builders<BsonDocument>.Filter.Lte("time", date.AddDays(1));
+
+            List<BsonDocument> values = Instance.ClientMongo.GetDatabase("tfmDatabase").GetCollection<BsonDocument>(collection).Find(filter).ToList();
+
+            foreach ( var item in values)
+            {
+                line.Values.Add(new DateChartModel((DateTime)item["time"].AsBsonDateTime, Convert(item["state"].AsString)));
+            }
+            return line;
+        }
+
+        public static double Convert( string state )
+        {
+            double res = 0.0;
+            if( state.Equals("ON"))
+            {
+                res = 1.0;
+            }
+            else if (state.Equals("OFF"))
+            {
+                res = 0.0;
+            }
+
+            return res;
+        }
+
     }
 }

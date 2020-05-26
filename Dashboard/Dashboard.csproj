@@ -153,6 +153,7 @@
     <Compile Include="Control\DeviceListItemControl.xaml.cs">
       <DependentUpon>DeviceListItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\DateChartModel.cs" />
     <Compile Include="DataModels\Devices.cs" />
     <Compile Include="Expressions\ExpressionsHelpers.cs" />
     <Compile Include="MainWindow.xaml.cs">
