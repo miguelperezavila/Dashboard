@@ -7,6 +7,7 @@ using System.Linq;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
+using System.Data;
 
 namespace Dashboard
 {
@@ -161,20 +162,64 @@ namespace Dashboard
             Instance.ClientMongo.GetDatabase("tfmDatabase").GetCollection<BsonDocument>(collection).InsertOne(document);
         }
 
-        public static LineSeries GetData( string collection, DateTime date )
+        public static void GetData( string collection, DateTime date, SeriesCollection series )
         {
             LineSeries line = new LineSeries();
             line.Values = new ChartValues<DateChartModel>();
-
-            var filter = Builders<BsonDocument>.Filter.Eq("topicVersion", "1.0") & Builders<BsonDocument>.Filter.Gte("time", date) & Builders<BsonDocument>.Filter.Lte("time", date.AddDays(1));
+            var filter = Builders<BsonDocument>.Filter.Gte("time", date) & Builders<BsonDocument>.Filter.Lte("time", date.AddDays(1));
 
             List<BsonDocument> values = Instance.ClientMongo.GetDatabase("tfmDatabase").GetCollection<BsonDocument>(collection).Find(filter).ToList();
 
             foreach ( var item in values)
             {
+                //series[0].Values.Add(new DateChartModel((DateTime)item["time"].AsBsonDateTime, Convert(item["state"].AsString)));
                 line.Values.Add(new DateChartModel((DateTime)item["time"].AsBsonDateTime, Convert(item["state"].AsString)));
             }
-            return line;
+
+            series.Add(line);
+            //return line;
+        }
+
+        public static void GetCommandData( string collection, DateTime date, DataTable Table )
+        {
+            var filter = Builders<BsonDocument>.Filter.Gte("CommandDate", date) & Builders<BsonDocument>.Filter.Lte("CommandDate", date.AddDays(1));
+            List<BsonDocument> values = Instance.ClientMongo.GetDatabase("tfmDatabase").GetCollection<BsonDocument>(collection).Find(filter).ToList();
+            //BsonDocument last;
+            Table.Rows.Clear();
+
+            if ( values.Count == 0 )
+            {
+                filter = Builders<BsonDocument>.Filter.Exists("CommandDate");
+                var sort = Builders<BsonDocument>.Sort.Descending("CommandDate");
+
+                var last = Instance.ClientMongo.GetDatabase("tfmDatabase").GetCollection<BsonDocument>(collection).Find(filter).Sort(sort).First();
+
+                DataRow row = Table.NewRow();
+
+                row[0] = ((DateTime)(last["CommandDate"].AsBsonDateTime)).ToString("dd/MM/yyyy HH:mm:ss");
+                row[1] = ((DateTime)(last["StartTime"].AsBsonDateTime)).ToString("HH:mm:ss");
+                row[2] = ((DateTime)(last["StopTime"].AsBsonDateTime)).ToString("HH:mm:ss");
+                row[3] = last["PowerOFF"].AsString;
+                row[4] = last["PowerON"].AsString;
+
+                Table.Rows.Add(row);
+
+            }
+            else
+            {
+                foreach( var item in values )
+                {
+                    DataRow row = Table.NewRow();
+
+                    row[0] = ((DateTime)(item["CommandDate"].AsBsonDateTime)).ToString("dd/MM/yyyy HH:mm:ss");
+                    row[1] = ((DateTime)(item["StartTime"].AsBsonDateTime)).ToString("HH:mm:ss");
+                    row[2] = ((DateTime)(item["StopTime"].AsBsonDateTime)).ToString("HH:mm:ss");
+                    row[3] = item["PowerOFF"].AsString;
+                    row[4] = item["PowerON"].AsString;
+
+                    Table.Rows.Add(row);
+                }
+            }
         }
 
         public static double Convert( string state )

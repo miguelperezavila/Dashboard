@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="DataModels\DateChartModel.cs" />
     <Compile Include="DataModels\Devices.cs" />
+    <Compile Include="DataModels\TableChartModel.cs" />
     <Compile Include="Expressions\ExpressionsHelpers.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
